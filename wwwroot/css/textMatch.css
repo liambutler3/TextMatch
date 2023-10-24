@@ -1,0 +1,65 @@
+/* Desktop overides */
+@media (min-width: 1024px) {
+    #textMatchForm label {
+        padding-top: 4%;
+        display:flex;
+        justify-content:center;
+    }
+}
+
+#TextMatchWrapper {
+    height: 100vh;
+}
+
+p {
+    font-size: 1.2em;
+}
+
+span#text {
+    font-weight: 700;
+    font-style: italic;
+}
+
+
+/* Form area */
+#textMatchForm {
+    margin: 0 auto 15px auto;
+    width: 95%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+#textMatchForm input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 5px;
+    font-size: 1.2em;
+}
+
+#textMatchForm input[type="submit"] {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 5px;
+    font-size: 1.2em;
+    background-color: #337ab7;
+    color: #fff;
+    border: 1px solid #2e6da4;
+    border-radius: 5px;
+}
+#textMatchForm input[type="submit"]:hover {
+    background-color: darkblue;
+    color: #fff;
+}
+
+/* Results area */
+#resultArea {
+    display: none;
+}
+#resultArea {
+    margin: 0 auto;
+    padding: 0 10px;
+}
+#resultArea p {
+    font-weight: 700;
+}

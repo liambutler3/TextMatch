@@ -1,0 +1,116 @@
+﻿@{
+    ViewData["Title"] = "Text Match";
+    @model TextMatch.Models.TextMatchViewModel;
+}
+
+<link href="@Url.Content("~/css/textMatch.css")" rel="stylesheet" type="text/css" />
+
+<div id="TextMatchWrapper">
+    
+    <div class="row">
+        <div class="col-12">
+            <h1>Text Match</h1>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <p>The Text is: <span id="text">"@Model.Text"</span></p>
+        </div>
+    </div>
+    
+    <div class="row">
+
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "textMatchForm" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="row">
+                <div class="col-lg-2 col-xs-12">
+                    @Html.LabelFor(m => m.Subtext, new { @class = "label" })
+                </div>
+
+                <div class="col-lg-10 col-xs-12">
+                    @Html.TextBoxFor(m => m.Subtext, new { placeholder = "Enter sub text", @class = "form-input" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 col-xs-12">
+                    <input id="Submit" type="submit" value="Match"/>
+                </div>
+                
+                <div class="col-lg-12">
+                    @Html.ValidationMessageFor(m => m.Subtext, "", new { @class = "text-danger", @id="subTextValMessage" })
+                </div>
+            </div>
+        }
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <h2>Result</h2>
+        </div>
+    </div>
+    <div class="row" id="resultArea">
+        <div class="col-12" >
+            <p id="result"></p>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    
+    <script>
+        window.onload = function () 
+        {
+            var textMatchForm = document.getElementById("textMatchForm");
+
+            if (textMatchForm) 
+            {
+                textMatchForm.addEventListener("submit", (e) => 
+                {
+                    e.preventDefault();
+
+                    var sourceStr = "@Html.Raw(@Model.Text)";
+                    var searchStr = document.getElementById("Subtext").value;
+
+                    var resultArea = document.getElementById("resultArea");
+                    var subTextValMessage = document.getElementById("subTextValMessage");
+
+                    if (subTextValMessage && searchStr === "")
+                    {
+                        subTextValMessage.innerHTML = "Please enter a value to match against";
+                        subTextValMessage.style.display = "block";
+                        resultArea.style.display = "none";
+
+                    }
+                    // passed validation
+                    else 
+                    {
+                        subTextValMessage.style.display = "none";
+
+                        // handle getting the indexes of the search string
+                        var indexes = [...sourceStr.matchAll(new RegExp(searchStr, 'gi'))].map(a => a.index + 1);
+
+                        // show the result
+                        if (resultArea) {
+                            // have results to display
+                            if (indexes.length > 0) {
+                                result.innerHTML = indexes;
+                            }
+                            else {
+                                result.innerHTML = "There is no output";
+                            }
+
+                            resultArea.style.display = "block";
+                        }
+                    }
+                    //console.log(indexes);                     
+                });
+            }
+        }
+
+    </script>
+}
